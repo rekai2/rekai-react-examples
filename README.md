@@ -1,0 +1,1 @@
+This repository contains examples on how to use rek.ai-javascript with react.

@@ -9,12 +9,7 @@ const App = () => (
       <Route
         index
         element={(
-          <Predictions options={{
-            overwrite: {
-              nrofhits: 8
-            }
-          }}
-          />
+          <Predictions />
         )}
       />
       <Route
@@ -22,12 +17,11 @@ const App = () => (
         element={(
           <Predictions options={{
             overwrite: {
-              nrofhits: 2,
-              subtree: 'intranat'
+              nrofhits: 4, // Only retrieve the 4 most relevant hits, default is 10
             }
           }}
           />
-)}
+        )}
       />
     </Route>
   </Routes>
