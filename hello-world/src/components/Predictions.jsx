@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import { LinkIcon } from '@heroicons/react/24/solid'
 
 const Predictions = ({ options = {} }) => {
   const [predictions, setPredictions] = useState([])
@@ -17,12 +18,14 @@ const Predictions = ({ options = {} }) => {
 
   return (
     <div className='max-w-[1200px] mx-auto mt-20 px-5'>
-      <div className='rek-prediction grid grid-cols-4 gap-5'>
+      <div className='rek-prediction'>
         {
           predictions.map((prediction, index) => (
-            <div key={index} className='border rounded px-4 py-4 shadow'>
-              <h2 className='text-xl font-bold'>{prediction.title}</h2>
-              <p>{prediction.url}</p>
+            <div className='inline-block' key={`prediction-${index}`}>
+              <Link to={prediction.url} className='border rounded-full hover:bg-gray-200 transition-all px-4 py-3 mx-2 my-2 shadow items-center flex w-auto overflow-hidden'>
+                <LinkIcon className='w-6 h-6 mr-2' />
+                <span className='whitespace-nowrap w-5/6'>{prediction.title}</span>
+              </Link>
             </div>
           ))
         }
