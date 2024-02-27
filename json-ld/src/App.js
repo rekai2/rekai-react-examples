@@ -9,14 +9,20 @@ const App = () => (
       <Route
         index
         element={(
-          <Predictions />
+          <Predictions options={{
+            overwrite: {
+              addcontent: true // Retrieve content
+            }
+          }}
+          />
         )}
       />
       <Route
-        path='intranet'
+        path='limited'
         element={(
           <Predictions options={{
             overwrite: {
+              addcontent: true,
               nrofhits: 4 // Only retrieve the 4 most relevant hits, default is 10
             }
           }}

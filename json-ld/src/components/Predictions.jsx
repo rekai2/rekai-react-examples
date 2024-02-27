@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { LinkIcon } from '@heroicons/react/24/solid'
 
 const Predictions = ({ options = {} }) => {
   // Initialize state for predictions
@@ -30,17 +29,31 @@ const Predictions = ({ options = {} }) => {
 
   return (
     <div className='max-w-[1200px] mx-auto mt-20 px-5'>
-      <div className='rek-prediction'>
+      <div className='rek-prediction grid grid-cols-3 gap-8'>
         {
           // Map over the predictions and render each one
-          predictions.map((prediction, index) => (
-            <div className='inline-block' key={`prediction-${index}`}>
-              <Link to={prediction.url} className='border rounded-full hover:bg-gray-200 transition-all px-4 py-3 mx-2 my-2 shadow items-center flex w-auto overflow-hidden'>
-                <LinkIcon className='w-6 h-6 mr-2' />
-                <span className='w-5/6'>{prediction.title}</span>
+          predictions.map((prediction, index) => {
+            const jsonLdData = prediction.ldjson.find(ld => ld['@type'] === 'Product')
+
+            if (!jsonLdData) return null
+
+            return (
+              <Link
+                to={prediction.url}
+                className='border rounded-xl hover:bg-gray-100 transition-all shadow overflow-hidden'
+              >
+                <img src={jsonLdData.image} alt={jsonLdData.name} className='w-full h-60 object-cover' />
+                <div className='px-4 pt-2 pb-4'>
+                  <h4 className='font-bold'>{jsonLdData.name}</h4>
+                  <span>{jsonLdData.location}</span>
+                  <div className='flex justify-between mt-10'>
+                    {jsonLdData.offers?.price && jsonLdData.offers?.priceCurrency && (<span>{jsonLdData.offers.price} {jsonLdData.offers.priceCurrency}</span>)}
+                    {jsonLdData.description2 && <span>{jsonLdData.description2}</span>}
+                  </div>
+                </div>
               </Link>
-            </div>
-          ))
+            )
+          })
         }
       </div>
     </div>
